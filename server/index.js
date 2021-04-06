@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const fs = require('fs')
+const path = require('path')
 const PORT = process.env.PORT || 3000
 const app = express()
 
@@ -14,7 +15,8 @@ app.get('/', (req, res) => {
 
 // Fetch static PDF file from disk and send in base64 format
 app.post('/getpdf', (req, res) => {
-  const buff = fs.readFileSync('hello.pdf')
+  const file = path.join(__dirname, '..', '/files/hello.pdf')
+  const buff = fs.readFileSync(file)
   const base64data = buff.toString('base64')
   
   res.status(200).json({
